@@ -1,0 +1,47 @@
+version: '3.8'
+
+volumes:
+  postgres_data:
+
+services:
+  db:
+    image: postgres:15.2-alpine
+    container_name: lzdb_dummy
+    environment:
+      - POSTGRES_USER=${postgres_user}
+      - POSTGRES_PASSWORD=${postgres_password}
+      - POSTGRES_DB=${postgres_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: app
+    environment:
+      - POSTGRES_HOST=${postgres_host}
+      - POSTGRES_DB=${postgres_port}
+      - POSTGRES_USER=${postgres_user}
+      - POSTGRES_PASSWORD=${postgres_password}
+      - POSTGRES_DB=${postgres_db}
+      - PYTHONPATH=$"${PYTHONPATH}:/app:/config:/tests"
+      - ISDOCKER=${is_docker}
+    depends_on:
+      - db
+
+  # test:
+  #   build: .
+  #   container_name: plsblty_tester
+  #   command: ["python", "tests/test_main.py"]
+  #   environment:
+  #     - POSTGRES_HOST=${postgres_host}
+  #     - POSTGRES_DB=${postgres_port}
+  #     - POSTGRES_USER=${postgres_user}
+  #     - POSTGRES_PASSWORD=${postgres_password}
+  #     - POSTGRES_DB=${postgres_db}
+  #     - PYTHONPATH=$"${PYTHONPATH}:/app:/config:/tests"
+  #     - ISDOCKER=${is_docker}
+  #   depends_on:
+  #     - db
+  #     - app
