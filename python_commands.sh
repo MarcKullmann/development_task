@@ -4,5 +4,6 @@
 python -m app.db &
 python -m app.main &
 python -m tests.test_main &
+python -m tests.unittesting &
 
 wait

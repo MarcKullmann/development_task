@@ -29,19 +29,3 @@ services:
       - ISDOCKER=${is_docker}
     depends_on:
       - db
-
-  # test:
-  #   build: .
-  #   container_name: plsblty_tester
-  #   command: ["python", "tests/test_main.py"]
-  #   environment:
-  #     - POSTGRES_HOST=${postgres_host}
-  #     - POSTGRES_DB=${postgres_port}
-  #     - POSTGRES_USER=${postgres_user}
-  #     - POSTGRES_PASSWORD=${postgres_password}
-  #     - POSTGRES_DB=${postgres_db}
-  #     - PYTHONPATH=$"${PYTHONPATH}:/app:/config:/tests"
-  #     - ISDOCKER=${is_docker}
-  #   depends_on:
-  #     - db
-  #     - app
